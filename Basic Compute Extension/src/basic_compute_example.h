@@ -25,13 +25,20 @@ private:
     RID shader;
     RID pipeline;
     bool shader_initialized;
+    int compute_mode; // 0 = built-in, 1 = external file
+    
+    // Hard-coded compute shader
+    static const char* DEFAULT_COMPUTE_SHADER;
 
 protected:
     static void _bind_methods();
 
 public:
-    // Initialize shader
-    bool initialize_shader(const String& shader_path);
+    // Initialize shader with built-in compute shader
+    bool initialize_shader();
+    
+    // Initialize shader with external file
+    bool initialize_shader_from_path(const String& shader_path);
     
     // Process data with compute shader
     PackedByteArray process_data(const PackedByteArray& input_data);
@@ -39,7 +46,10 @@ public:
     // Original methods from template
     void set_value(int p_value);
     int get_value() const;
-    int double_value() const;
+    
+    // Compute mode selector
+    void set_compute_mode(int p_mode);
+    int get_compute_mode() const;
 
     BasicComputeExample();
     ~BasicComputeExample();
